@@ -1,0 +1,92 @@
+{% load static %}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 header">
+
+        <!-- 🔥 همبرگری فقط برای موبایل -->
+        <button class="navbar-toggler d-lg-none canvas-btn" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#mobileMenu">
+            {#            <span class="navbar-toggler-icon"></span>#}
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <!-- LOGO -->
+        <div class="">
+            <a class="navbar-brand nav-hover d-block" href="{% url 'home' %}">
+                <img src="{% static 'logo/logo.png' %}" width="80" alt="">
+            </a>
+        </div>
+
+
+        <!-- 🔥 منوی دسکتاپ (نمایش فقط در دسکتاپ) -->
+        <div class="collapse navbar-collapse d-none d-lg-flex justify-content-between pe-5">
+
+            <ul class="navbar-nav gap-4">
+                <li><a class="nav-link text-white nav-hover" href="{% url 'home' %}">خانه</a></li>
+                <li><a class="nav-link text-white nav-hover" href="#">کتاب ها</a></li>
+                <li><a class="nav-link text-white nav-hover" href="#">مقالات</a></li>
+                <li><a class="nav-link text-white nav-hover" href="#">درباره ما</a></li>
+                <li><a class="nav-link text-white nav-hover" href="#">تماس با ما</a></li>
+            </ul>
+            <div class="d-flex gap-3">
+                <div class="position-relative" style="max-width: 300px;">
+                    <input type="text" class="form-control ps-5 banafsh-bg text-white" placeholder="جستجو...">
+                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-3 text-white"></i>
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <div class="clickable w-20" data-bs-toggle="dropdown"
+                             aria-expanded="false">
+                            <img class="circle-border img-fluid" src="{{ user.profile_picture.url }}"
+                                 alt="تصویر پروفایل">
+
+                        </div>
+                        <ul class="dropdown-menu bg-dark mt-2">
+                            <li><a class="dropdown-item text-white nav-hover dropdown-hover-dark" href="{% url 'dashboard' %}">داشبورد</a></li>
+                            <li><a class="dropdown-item text-white nav-hover dropdown-hover-dark" href="{% url 'dashboard' %}">پروفایل</a></li>
+                            <li><a class="dropdown-item text-white nav-hover dropdown-hover-dark" href="{% url 'logout' %}">خروج</a></li>
+                        </ul>
+                    </div>
+                    <a class="d-block" href="#">
+
+                    </a>
+                {% else %}
+                    <a class="btn btn-primary text-white zard w-25 " href="{% url 'login' %}">ورود</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 🔥 OFFCANVAS برای موبایل -->
+        <div class="offcanvas offcanvas-end bg-dark text-white d-lg-none" id="mobileMenu">
+
+            <div class="offcanvas-header justify-content-between">
+                <h5 class="offcanvas-title">منو سایت</h5>
+                <button type="button" class="close-offcanvas canvas-close canvas-btn" data-bs-dismiss="offcanvas">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column justify-content-between">
+
+                <ul class="navbar-nav gap-3">
+                    <li><a class="nav-link text-white active" href="{% url 'home' %}">خانه</a></li>
+                    <li><a class="nav-link text-white" href="#">درباره ما</a></li>
+                    <li><a class="nav-link text-white" href="#">تماس با ما</a></li>
+                    <li><a class="nav-link text-white" href="#">خدمات</a></li>
+                    <li><a class="nav-link text-white" href="#">مقالات</a></li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <div class="d-flex flex-column gap-2 mt-4">
+                        <a class="btn btn-primary text-white zard" href="#">پروفایل</a>
+                    </div>
+                {% else %}
+
+                    <div class="d-flex flex-column gap-2 mt-4">
+                        <a class="btn btn-primary text-white zard" href="{% url 'login' %}">ثبت نام/ورود</a>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </nav>
+</header>

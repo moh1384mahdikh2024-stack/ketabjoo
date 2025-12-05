@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    ورود
+{% endblock %}
+{% block main %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} auto-dismiss fade show" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+    <div class="login-box mx-auto banafsh-border p-4 bg-dark w-300">
+        <div class="login-form">
+            <div class="login-logo">
+                <a href="{% url 'home' %}" class="mx-auto d-block mb-4 w-25">
+                    <img src="{% static 'logo/favicon.png' %}" alt="" class="img-fluid">
+                </a>
+            </div>
+            <form method="POST" action="{% url 'login' %}" class="d-flex flex-column gap-3">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-floating">
+                        {{ field }}
+                        <label for="{{ field.id_for_label }}" class="text-end">
+                            {{ field.label }}
+                        </label>
+                    </div>
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <small class="alert alert-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                <input type="submit" value="ورود" class="btn btn-primary zard ms-auto clickable">
+                <p class="text-white">اگر حسابی ندارید <a href="{% url 'register' %}" class="link text-decoration-none text-zard">ثبت
+                    نام</a> کنید</p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

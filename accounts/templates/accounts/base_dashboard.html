@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}
+    داشبورد
+{% endblock %}
+{% block main %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} auto-dismiss fade show" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+    {% endif %}
+    <div class="container d-flex flex-row gap-3">
+        <div class="card shadow w-25 p-5 bg-dark text-white">
+            <div class="container d-flex flex-column gap-3 justify-content-center align-items-center">
+                <img src="{{ user.profile_picture.url }}" alt="پروفایل" class="img-fluid rounded-circle w-h-150">
+                <div class="text-zard f-3">
+                    {% if user.first_name %}
+                        {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                </div>
+                <a href="#" class="link text-decoration-none text-zard f-1">{{ user.email }}</a>
+            </div>
+            <hr>
+            <div class="container d-flex flex-column gap-3 justify-content-center align-items-center">
+                {% block dashboard_nav %}
+
+                    <ul class="container d-flex flex-column gap-4 justify-content-center align-items-center list-unstyled">
+                        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh"
+                                        href="{% url 'dashboard' %}">داشبورد</a></li>
+                        </li>
+                        <li class="">
+                            <a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+                                کتاب های خریداری شده
+                            </a>
+                        </li>
+                        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">تاریخچه
+                            تراکنش</a></li>
+                        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">تیکت های
+                            من</a></li>
+                        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">تیکت
+                            جدید</a></li>
+                        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh"
+                                        href="#">تنظیمات</a>
+                    </ul>
+                {% endblock %}
+                <a href="{% url 'logout' %}" class="btn btn-danger banafsh" style="width: 100%;">خروج</a>
+            </div>
+        </div>
+        <div class="card shadow w-75 p-5 bg-dark text-white">
+            {% block dashboard_content %}
+                <div class="container d-flex flex-column w-100 h-100 gap-5">
+                    <div class="container w-100 h-50 d-flex flex-column gap-3">
+                        <div class="text-zard f-4">کتاب های شما :</div>
+                        <div class="container bg-white banafsh-shadow card h-100 "></div>
+                    </div>
+                    <div class="container w-100 h-50 d-flex flex-column gap-3">
+                        <div class="w-100 h-100 d-flex flex-row gap-5">
+                            <div class="container d-flex flex-column gap-3">
+                                <div class="text-zard w-50 f-4">آمار کلی :</div>
+                                <div class="container bg-dark h-100 d-flex flex-column gap-2 p-0">
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">امتیاز:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">تعداد کتاب های شما:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">تعداد کتاب های مورد علاقه:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">تعداد کامنت ها:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">تعداد تیکت های باز:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                    <div class="container banafsh-bg d-flex flex-row justify-content-between banafsh-border card w-100 pad-2">
+                                        <div class="text-white f-2">تعداد تیکت ها:</div>
+                                        <div class="text-white">5</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container d-flex flex-column gap-3">
+                                <div class="text-zard w-50 f-4">آخرین تیکت شما :</div>
+                                <div class="container f-3 text-white banafsh-shadow border-0 card bg-dark h-100 d-flex flex-column justify-content-center align-items-center p-0">
+                                    {#                                    هنوز تیکتی وجود ندارد#}
+                                    <div class="card w-100 h-100 border-0">
+                                        <div class="card-header banafsh-bg border-2 text-white d-flex justify-content-between align-items-center h-25">
+                                            <div class="text-white f-2">عنوان تیکت:سلام</div>
+                                            <div class="text-white f-2">وضعیت:باز</div>
+                                        </div>
+                                        <div class="card-body h-75 f-1 p-3">
+                                            <div class="ticket-content h-100">
+                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده
+                                                از
+                                                طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و
+                                                سطرآنچنان که
+                                                لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف
+                                                بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال
+                                                و
+                                                آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت
+                                                بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو
+                                                در
+                                                زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری
+                                                موجود
+                                                در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل
+                                                حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی
+                                                اساسا مورد استفاده قرار گیرد.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

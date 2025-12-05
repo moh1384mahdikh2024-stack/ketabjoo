@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    ثبت نام
+{% endblock %}
+{% block main %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} auto-dismiss fade show" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="cart d-flex flex-row mx-auto banafsh-border p-4 bg-dark w-75">
+        <div class="container " style="width: 35%;border-left: 1px solid #3a3a3a;">
+            <div class="logo">
+                <a href="{% url 'home' %}" class="link text-decoration-none d-block" style="width: 40%;">
+                    <img src="{% static 'logo/favicon.png' %}" alt="logo" class="d-block w-100">
+                </a>
+            </div>
+            <ul class="list-unstyled d-flex flex-column mt-5 pe-0" style="gap: 2.5rem">
+                <li class="text-white f-2">
+                    نام کاربری باید حداقل 5 کاراکتر باشد
+                </li>
+                <li class="text-white f-2">
+                    گذرواژه نباید کمتر از 8 کاراکتر باشد
+                </li>
+                <li class="text-white f-2">
+                    گذرواژه شما باید شما اعداد حروف و @ باشد
+                </li>
+                <li class="text-white f-2">
+                    شماره تلفن شما باید به فرمت *********09 باشد
+                </li>
+            </ul>
+        </div>
+        <div class="container" style="width: 65%">
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="row row-cols-2 g-3">
+                    {% for field in form %}
+                        <div class="col">
+                            <div class="form-floating">
+                                {{ field }}
+                                <label class="text-end" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <input type="submit" class="btn btn-primary zard mt-3" value="ثبت نام">
+            </form>
+        </div>
+    </div>
+{% endblock %}

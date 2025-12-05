@@ -1,0 +1,27 @@
+{% extends 'accounts/base_dashboard.html' %}
+{% block title %}
+    داشبورد ادمین
+{% endblock %}
+{% block dashboard_nav %}
+    <ul class="container d-flex flex-column gap-4 justify-content-center align-items-center list-unstyled">
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh"
+                        href="{% url 'dashboard' %}">داشبورد</a></li>
+        </li>
+        <li class="">
+            <a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+                افرودن کتاب
+            </a>
+        </li>
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+            تراکنش های انجام شده
+            </a></li>
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+            تیکت ها
+        </a></li>
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+            کامنت ها
+        </a></li>
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh"
+                        href="#">تنظیمات</a>
+    </ul>
+{% endblock %}

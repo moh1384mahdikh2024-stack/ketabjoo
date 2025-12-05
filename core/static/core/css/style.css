@@ -1,0 +1,320 @@
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazirmatn FD;
+  src: url('../fonts/Vazirmatn-FD-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+    font-family: "Vazirmatn FD";
+    text-align: right;
+}
+
+:root {
+    --color-zard: #F6AB43;
+    --color-zard-hover: #e19e3e;
+    --color-banafsh: #956B7F;
+    --color-banafsh-hover: #886476;
+    --color-banafsh-op-5: rgba(149, 107, 127, 0.5);
+}
+
+html {
+    direction: rtl;
+}
+
+.header {
+    padding: 10px 30px;
+}
+
+.active {
+    color: var(--color-zard) !important;
+}
+
+.active-banafsh {
+    color: var(--color-banafsh) !important;
+}
+
+.banafsh {
+    background-color: var(--color-banafsh) !important;
+    border-color: var(--color-banafsh);
+}
+
+.banafsh:hover {
+    background-color: var(--color-banafsh-hover) !important;
+    border-color: var(--color-banafsh-hover);
+}
+
+.nav-hover {
+    transition: all 0.3s;
+}
+
+.nav-hover:hover {
+    color: var(--color-zard) !important;
+    transform: scale(1.03);
+}
+
+.nav-hover-banafsh {
+    transition: all 0.3s;
+}
+
+.nav-hover-banafsh:hover {
+    color: var(--color-banafsh) !important;
+    transform: scale(1.03);
+}
+
+.zard {
+    background-color: var(--color-zard) !important;
+    border-color: var(--color-zard) !important;
+}
+
+.zard:hover {
+    background-color: var(--color-zard-hover) !important;
+}
+
+.close-offcanvas {
+    margin-left: 0 !important;
+    margin-right: 20px !important;
+}
+
+.canvas-btn, .canvas-btn:focus, canvas-btn:focus-visible {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.canvas-btn i {
+    font-size: 25px;
+    color: var(--color-banafsh) !important;
+}
+
+#circle {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--color-banafsh);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: .05s ease;
+    opacity: 0.7;
+}
+
+/* نقطه همیشه درون دایره */
+#dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--color-banafsh);
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: .05s ease;
+    opacity: 0.7;
+}
+
+.cursor-hover #circle {
+    width: 50px;
+    height: 50px;
+    opacity: .2;
+    /*transition: .08s ease;*/
+    background-color: var(--color-banafsh);
+}
+
+.cursor-hover #dot {
+    /*transition: .08s ease;*/
+    opacity: 0; /* نقطه مخفی می‌شود */
+}
+
+form .form-floating > label {
+    text-align: right;
+    left: auto; /* جایگزین left پیش‌فرض */
+    right: 0.75rem; /* فاصله از سمت راست مثل padding */
+    direction: rtl; /* متن راست به چپ */
+}
+
+.banafsh-border {
+    border: 1px solid var(--color-banafsh);
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: var(--color-banafsh);
+    box-shadow: none;
+}
+
+.form-control {
+    border-color: var(--color-banafsh-op-5);
+    box-shadow: none;
+}
+
+.text-zard {
+    color: var(--color-zard);
+}
+
+.text-banafsh {
+    color: var(--color-banafsh);
+}
+
+.banafsh-bg {
+    background-color: var(--color-banafsh) !important;
+    border-color: var(--color-banafsh);
+}
+
+.banafsh-bg::placeholder {
+    color: whitesmoke;
+}
+
+.zard-bg {
+    background-color: var(--color-zard);
+    border: 1px solid var(--color-zard);
+}
+
+.w-300 {
+    width: 300px;
+}
+
+.w-20 {
+    width: 38px !important;
+    height: 38px !important;
+}
+
+.circle-border {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.dropdown-hover-dark:hover {
+    background-color: rgb(33, 37, 41);
+    transform: scale(1) !important;
+}
+
+.dropdown-hover-dark {
+    margin-top: 10px;
+}
+
+.w-h-150 {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover;
+}
+
+.f-1 {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.f-2 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.f-3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.f-4 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.zard-shadow {
+    /*border: 1px solid var(--color-zard);*/
+    box-shadow: 0px 0px 10px -3px var(--color-zard) inset;
+    -webkit-box-shadow: 0px 0px 10px -3px var(--color-zard) inset;
+    -moz-box-shadow: 0px 0px 10px -3px var(--color-zard) inset;
+}
+
+.banafsh-shadow {
+    /*border: 1px solid var(--color-banafsh);*/
+    box-shadow: 0px 0px 10px -5px var(--color-banafsh);
+    -webkit-box-shadow: 0px 0px 10px -5px var(--color-banafsh);
+    -moz-box-shadow: 0px 0px 10px -5px var(--color-banafsh);
+}
+
+.pad-2 {
+    padding: 5px 10px;
+}
+
+.ticket-content {
+    display: -webkit-box; /* فعال کردن حالت باکس انعطاف‌پذیر */
+    -webkit-box-orient: vertical; /* جهت‌بندی عمودی */
+    -webkit-line-clamp: 9; /* تعداد خطوط محدود */
+    overflow: hidden; /* مخفی کردن باقی متن */
+    text-overflow: ellipsis; /* اضافه کردن … */
+}
