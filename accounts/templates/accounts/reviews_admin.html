@@ -1,0 +1,39 @@
+{% extends 'accounts/admin_dashboard.html' %}
+
+{% block title %}
+    نظرات کاربران
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="container rounded d-flex flex-column align-items-center bg-white p-3 h-100" style="overflow-y: scroll;">
+        {% if reviews %}
+            {% for review in reviews %}
+                <div class="container zard-bg shadow-lg rounded w-100 p-4">
+                    <div class="h-25 d-flex justify-content-between">
+                        <div class="d-flex justify-content-center align-items-center">
+                            نویسنده :
+                            {{ review.author }}
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            امتیاز :
+                            {{ review.score }}
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            کتاب :
+                            {{ review.book }}
+                        </div>
+                    </div>
+                    <hr class="my-2">
+                    <div class="h-50 d-flex flex-column gap-3">
+                        <p class="card-text my-0">{{ review.content }}</p>
+                        <small class="text-muted">{{ review.created_at }}</small>
+                        <div class="btns d-flex gap-2">
+                            <a class="btn btn-success" href="{% url 'accept-review' review.pk %}">پذیرفتن</a>
+                            <a class="btn btn-danger" href="{% url 'reject-review' review.pk %}">رد کردن</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

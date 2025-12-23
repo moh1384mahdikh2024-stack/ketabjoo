@@ -8,17 +8,27 @@
                         href="{% url 'dashboard' %}">داشبورد</a></li>
         </li>
         <li class="">
-            <a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+            <a class="link text-white text-decoration-none nav-hover-banafsh" href="{% url 'book_admin' %}">
                 افرودن کتاب
+            </a>
+        </li>
+        <li class="">
+            <a class="link text-white text-decoration-none nav-hover-banafsh" href="{% url 'category_admin' %}">
+                دسته بندی ها
+            </a>
+        </li>
+        <li class="">
+            <a class="link text-white text-decoration-none nav-hover-banafsh" href="{% url 'author_admin' %}">
+                نویسنده ها
             </a>
         </li>
         <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
             تراکنش های انجام شده
-            </a></li>
+        </a></li>
         <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
             تیکت ها
         </a></li>
-        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="#">
+        <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh" href="{% url 'status_comment_admin' %}">
             کامنت ها
         </a></li>
         <li class=""><a class="link text-white text-decoration-none nav-hover-banafsh"

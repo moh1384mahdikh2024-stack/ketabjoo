@@ -1,0 +1,59 @@
+{% extends 'accounts/admin_dashboard.html' %}
+{% block title %}
+    {% if edit %}
+        ویرایش کتاب
+    {% else %}
+        کتاب جدید
+    {% endif %}
+{% endblock %}
+{% block dashboard_content %}
+    <div class="container d-flex flex-column w-100 h-100 gap-5">
+        <div class="container w-100 d-flex flex-column gap-3">
+            <div class="text-zard f-4">کتاب های جدید :</div>
+            <div class="container bg-white banafsh-shadow card h-100 d-flex flex-row align-items-center {% if not books %}justify-content-center{% endif %} gap-2"
+                 style="min-height: 250px">
+                {% if books %}
+                    {% for book in books %}
+                        <a class="d-block card-book-img text-decoration-none" href="{% url 'book_detail' book.slug %}">
+                            <img src="{{ book.thumbnail.url }}" class="img-fluid" alt="...">
+                            <div class="book-title-hover d-flex align-items-center justify-content-center">
+                                <p class="text-white">
+                                    {{ book.title }}
+                                </p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-danger">
+                        هنوز کتابی وجود ندارد
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="container w-100 h-50 gap-3">
+            <form action="{% if edit %}{% url 'update_book' form.instance.slug%}{% else %}{% url 'create_book' %}{% endif %}"
+                  method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {{ form.media }}
+                <div class="row g-3">
+                    {% for field in form %}
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="text-end" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <input type="submit" class="btn btn-primary zard mt-3" value=" {% if edit %}ویرایش کتاب{% else %}افزودن کتاب{% endif %}">
+            </form>
+        </div>
+    </div>
+{% endblock %}

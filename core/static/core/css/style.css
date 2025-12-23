@@ -1,73 +1,73 @@
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Thin.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-ExtraLight.woff2') format('woff2');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-ExtraBold.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: Vazirmatn FD;
-  src: url('../fonts/Vazirmatn-FD-Black.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+    font-family: Vazirmatn FD;
+    src: url('../fonts/Vazirmatn-FD-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
 }
 
 * {
@@ -206,12 +206,12 @@ form .form-floating > label {
     border-radius: 8px;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border-color: var(--color-banafsh);
     box-shadow: none;
 }
 
-.form-control {
+.form-control, .form-select {
     border-color: var(--color-banafsh-op-5);
     box-shadow: none;
 }
@@ -317,4 +317,62 @@ form .form-floating > label {
     -webkit-line-clamp: 9; /* تعداد خطوط محدود */
     overflow: hidden; /* مخفی کردن باقی متن */
     text-overflow: ellipsis; /* اضافه کردن … */
+}
+
+.card-book-img {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.card-book-img img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.book-title-hover {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    transition: all .3s;
+    transform: translateY(-200px);
+    opacity: 0;
+}
+
+.card-book-img:hover .book-title-hover {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+.star-rating {
+    direction: rtl; /* برای مرتب شدن ستاره‌ها از راست به چپ */
+    font-size: 2rem;
+    display: flex;
+    gap: 5px;
+}
+.star-rating input {
+    display: none; /* مخفی کردن دکمه رادیویی */
+}
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: var(--color-zard);
+}
+
+
+.img-card{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
 }

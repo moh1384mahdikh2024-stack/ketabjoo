@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+{% block main %}
+    <section>
+        <h1>{{ book.title }}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-lg-2">
+                <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}" class="img-fluid rounded">
+            </div>
+            <div class="col-lg-7">
+                <div class="d-flex flex-column gap-3">
+                    <div class="text-dark f-3">نویسنده: <span class="text-banafsh">{{ book.author }}</span></div>
+                    <div class="text-dark f-3">ناشر: <span class="text-banafsh">{{ book.publisher }}</span></div>
+                    {% if book.translator %}
+                        <div class="text-dark f-3">مترجم: <span class="text-banafsh">{{ book.translator }}</span></div>
+                    {% endif %}
+                    <div class="text-dark f-2">
+                        {{ book.summary }}...
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card d-flex flex-column  bg-dark p-3 gap-3 ">
+                    <div class="d-flex flex-row justify-content-between mb-2">
+                        <span class="text-white">قیمت</span>
+                        <span class="text-white">{{ book.price }} تومان</span>
+                    </div>
+                    {% if user.is_staff %}
+                        <div class="col-lg-12">
+                            <a href="{% url 'update_book_admin' book.slug%}" class="btn btn-primary zard d-flex justify-content-center">
+                                ویرایش
+                            </a>
+                        </div>
+                        <div class="">
+                            <a href="{% url 'delete_book' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
+                                حذف
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-12">
+                            <a href="#" class="btn btn-primary zard d-flex justify-content-center">افزودن به سبد
+                                خرید</a>
+                        </div>
+                        <div class="">
+                            {% if is_favor %}
+                            	<a href="{% url 'remove_favorite' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
+                                خارج کردن از علاقه مندی ها
+                                </a>
+                            {% else %}
+                            	
+                            <a href="{% url 'add_favorite' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
+                                افزودن به علاقه مندی ها
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="">
+                        <span class="text-white f-1"><i class="fa-regular fa-gem text-banafsh mt-2"></i> بعد از خرید لینک دانلود برای شما فعال می شود</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section class="container">
+        <p class="text-dark">
+            {{ book.description|safe }}
+        </p>
+    </section>
+    <section class="container rounded bg-dark p-5 gap-3 d-flex flex-column">
+        {% if user.is_authenticated %}
+            {#            <form action="{% url 'create-review' book.slug%}" method="POST" class="w-50">#}
+            {#                {% csrf_token %}#}
+            {#                {{ comment_form.media }}#}
+            {#                {% for field in comment_form %}#}
+            {#                    <div class="form-group mb-4 d-flex flex-column gap-1">#}
+            {#                        <label class="text-white"  for="{{ field.id_for_label }}">{{ field.label }}</label>#}
+            {#                        {{ field }}#}
+            {#                    </div>#}
+            {#                {% endfor %}#}
+            {##}
+            {#                <div class="form-group">#}
+            {#                    {{ comment_form.score }}#}
+            {#                </div>#}
+            {#                <div class="form-group">#}
+            {#                    {{ comment_form.content }}#}
+            {#                </div>#}
+            {#                <input type="submit" value="ثبت نظر" class="btn btn-primary zard">#}
+            {#            </form>#}
+            <form class="d-flex flex-column gap-4 w-50" id="comment-rating-form" method="post"
+                  action="{% url 'create-review' book_slug=book.slug %}">
+                {% csrf_token %}
+                <!-- امتیاز ستاره‌ای -->
+                <div class="form-group d-flex flex-column gap-2">
+                    <div class="text-white">امتیاز شما :</div>
+                    <div class="star-rating">
+                        <input type="radio" name="rating" id="star5" value="5"><label for="star5"
+                                                                                      title="عالی">&#9733;</label>
+                        <input type="radio" name="rating" id="star4" value="4"><label for="star4"
+                                                                                      title="خوب">&#9733;</label>
+                        <input type="radio" name="rating" id="star3" value="3"><label for="star3"
+                                                                                      title="متوسط">&#9733;</label>
+                        <input type="radio" name="rating" id="star2" value="2"><label for="star2"
+                                                                                      title="ضعیف">&#9733;</label>
+                        <input type="radio" name="rating" id="star1" value="1" required><label for="star1"
+                                                                                               title="خیلی ضعیف">&#9733;</label>
+                    </div>
+                </div>
+
+                <!-- متن دیدگاه -->
+                <div class="form-group d-flex flex-column gap-2">
+                    <label class="text-white" for="commentField">متن دیدگاه :</label>
+                    <textarea id="commentField" class="form-control" name="comment" placeholder="دیدگاه شما..." cols="5"
+                              rows="10" required></textarea>
+                </div>
+
+                <!-- دکمه ارسال -->
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="ثبت دیدگاه">
+                </div>
+            </form>
+        {% endif %}
+        <div class="bg-light shadow rounded p-3 mb-5 d-flex {% if not comments %}align-items-center{% endif %} flex-column gap-3">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="card p-3 text-zard rounded bg-dark">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="">{{ comment.author }}</div>
+                            <div class="star-rating ">
+                                {% with diff=5|add:0|subtract:comment.score %}
+                                    {% for i in diff|times %}
+                                        <span class="text-light">&#9733;</span>
+                                    {% endfor %}
+                                {% endwith %}
+                                {% for i in  comment.score|times %}
+                                    <span class="text-zard">&#9733;</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ comment.content }}</p>
+                            <small class="text-secondary">{{ comment.created_at }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-danger m-0">هنوز نظری برای این کتاب ثبت نشده</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

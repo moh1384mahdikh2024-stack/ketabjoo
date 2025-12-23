@@ -1,0 +1,74 @@
+{% extends 'accounts/admin_dashboard.html' %}
+{% block title %}
+    افزودن دسته بندی
+{% endblock %}
+{% block dashboard_content %}
+    <h3 class="text-zard f-4">
+        دسته جدید
+    </h3>
+    <hr>
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <small class="alert alert-danger">{{ error }}</small>
+        {% endfor %}
+    {% endif %}
+    <div class="container d-flex flex-row w-100 justify-content-between">
+        <form method="POST" action="{% if edit %}{% url 'update_category' form.instance.get_full_path%} {% else %}{% url 'create_category' %}{% endif %}" style="width: 35%" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="d-flex flex-column gap-4">
+                {% for field in form %}
+                    <div class="form-group">
+                        <label class="mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                {% if form.instance.pk %}
+                    <div class="text-white  w-75">
+                        <span>تصویر فعلی :</span>
+                        <img src="{{ form.instance.thumbnail.url }}" alt="" class="img-fluid mt-2">
+                    </div>
+                {% endif %}
+            </div>
+            <input type="submit" class="btn btn-primary zard mt-4" value="{% if edit %} ویرایش دسته{% else %}ایجاد دسته {% endif %}">
+        </form>
+        <div class="card bg-white border-0 w-50 d-flex {% if cat %} {% else %}{% endif %} p-3">
+            <div class="card py-2 px-3 mb-2 d-flex flex-row justify-content-between align-items-center w-100 zard-bg zard-border">
+                <div class="text-white">
+                    نام دسته
+                </div>
+                <div class="text-white">تعداد کتاب</div>
+                <div class="text-white">
+                    تصویر دسته
+                </div>
+            </div>
+            {% if cat %}
+                <ul class="d-flex flex-column gap-1 p-0 list-unstyled w-100">
+                    {% for c in cat %}
+                        <li class="card banafsh-border banafsh-bg py-2 px-3 w-100  d-flex flex-row justify-content-between align-items-center">
+                            <a class="link text-decoration-none text-white"
+                               href="{% url 'update_category_admin' c.get_full_path %}">
+                                {{ c.title }}
+                            </a>
+                            <a class="link text-decoration-none text-white">{{ c.books|length }}</a>
+                            <div>
+                                <img src="{{ c.thumbnail.url }}" alt="" width="30" height="30">
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+                    <div class="text-danger f-3">
+                        {% if is_child %}
+                            برای این دسته فرزندی وجود ندارد
+                        {% else %}
+                            هنوز دسته ای وجود ندارد
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

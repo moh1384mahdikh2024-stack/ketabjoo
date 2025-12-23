@@ -65,27 +65,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
- // گرفتن مسیر URL فعلی
-    const currentPath = window.location.pathname;
+// گرفتن مسیر URL فعلی
+const currentPath = window.location.pathname;
 
-    // گرفتن تمام لینک‌های داخل navbar
-    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+// گرفتن تمام لینک‌های داخل navbar
+const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
 
-    navLinks.forEach(link => {
-        // اگر href لینک داخل مسیر فعلی بود → active شود
-        if (link.getAttribute("href") === currentPath) {
-            link.classList.add("active");
-        }
-    });
-    // گرفتن مسیر URL فعلی
-    const currentPathDashboard = window.location.pathname;
+navLinks.forEach(link => {
+    // اگر href لینک داخل مسیر فعلی بود → active شود
+    if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+    }
+});
+// گرفتن مسیر URL فعلی
+const currentPathDashboard = window.location.pathname;
 
-    // گرفتن تمام لینک‌های داخل navbar
-    const navLinksDashboard = document.querySelectorAll(".nav-hover-banafsh");
+// گرفتن تمام لینک‌های داخل navbar
+const navLinksDashboard = document.querySelectorAll(".nav-hover-banafsh");
 
-    navLinksDashboard.forEach(link => {
-        // اگر href لینک داخل مسیر فعلی بود → active شود
-        if (link.getAttribute("href") === currentPathDashboard) {
-            link.classList.add("active-banafsh");
-        }
-    });
+navLinksDashboard.forEach(link => {
+    // اگر href لینک داخل مسیر فعلی بود → active شود
+    if (link.getAttribute("href") === currentPathDashboard) {
+        link.classList.add("active-banafsh");
+    }
+});
+
+
+
+
+
+
+
+

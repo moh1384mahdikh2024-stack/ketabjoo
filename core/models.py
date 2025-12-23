@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth import get_user_model
+from ckeditor.fields import RichTextField
+
 
 User = get_user_model()
 
@@ -8,8 +10,10 @@ User = get_user_model()
 # Create your models here.
 
 class Book(models.Model):
+    objects = models.Manager()
     title = models.CharField(max_length=250, verbose_name="نام کتاب")
-    author = models.CharField(max_length=250, verbose_name="نویسنده")
+    description = RichTextField(verbose_name="جزئیات")
+    author = models.ForeignKey(to="Author", on_delete=models.PROTECT, verbose_name="نویسنده",related_name="books")
     summary = models.TextField("خلاصه")
     price = models.DecimalField(verbose_name="قیمت", max_digits=10, decimal_places=0)
     discount = models.PositiveSmallIntegerField("تخفیف", validators=[MinValueValidator(0), MaxValueValidator(100)],
@@ -18,9 +22,12 @@ class Book(models.Model):
     translator = models.CharField(max_length=250, verbose_name="مترجم", null=True, blank=True)
     thumbnail = models.ImageField(upload_to="thumbnails", default="thumbnails/default.jpg", verbose_name="عکس اصلی")
     pdf_file = models.FileField(upload_to="pdf", verbose_name="فایل pdf")
-    category = models.ForeignKey(to="Category", on_delete=models.CASCADE, related_name="books",
+    category = models.ManyToManyField(to="Category", related_name="books",
                                  verbose_name="دسته بندی")
     rate = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)], verbose_name="امتیاز", default=0)
+    slug = models.SlugField(max_length=600, unique=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name="زمان اضافه شدن محصول",editable=False)
+    is_deleted = models.BooleanField("حذف شده", default=False)
 
     def __str__(self):
         return self.title
@@ -31,19 +38,45 @@ class Book(models.Model):
 
 
 class Category(models.Model):
+    objects = models.Manager()
     title = models.CharField(max_length=250, verbose_name="نام دسته")
     description = models.TextField("توضیحات دسته")
     thumbnail = models.ImageField("عکس دسته", upload_to="cat_thumbnails", default="cat_thumbnails/default.jpg",
                                   blank=True)
-    parent = models.ForeignKey(to="Category", verbose_name="دسته مادر", on_delete=models.CASCADE,
-                               related_name="children")
+    parent = models.ForeignKey(to="self", verbose_name="دسته مادر", on_delete=models.CASCADE,
+                               related_name="children", blank=True, null=True)
+    slug = models.SlugField(max_length=300)
 
     def __str__(self):
         return self.title
 
+    def get_full_path(self):
+        slugs = []
+        cat = self
+        while cat is not None:
+            slugs.append(cat.slug)
+            cat = cat.parent
+        slugs.reverse()
+        return "/".join(slugs)
+
     class Meta:
         verbose_name = "دسته بندی"
         verbose_name_plural = "دسته بندی"
+
+
+class Author(models.Model):
+    objects = models.Manager()
+    name = models.CharField(max_length=250,verbose_name="نام نویسنده")
+    description = models.TextField("درباره نویسنده")
+    photo = models.ImageField(upload_to="author_photos", default="author_photos/default.jpg", blank=True)
+    slug = models.SlugField(max_length=500,unique=True,blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name="نویسنده"
+        verbose_name_plural="نویسنده"
 
 
 # class Comment(models.Model):
@@ -121,3 +154,5 @@ class Category(models.Model):
 #     class Meta:
 #         verbose_name = "تخفیف"
 #         verbose_name_plural = "تخفیف"
+
+
