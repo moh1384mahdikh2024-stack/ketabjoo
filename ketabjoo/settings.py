@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'reviews.apps.ReviewsConfig',
     'favorite.apps.FavoriteConfig',
+    'invoices.apps.InvoicesConfig',
     'ckeditor.apps.CKEditorConfig',
     'ckeditor_uploader'
 ]

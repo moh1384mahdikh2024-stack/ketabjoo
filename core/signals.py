@@ -26,25 +26,12 @@ def set_slug_category(sender, instance, **kwargs):
             print("old_title")
             base_slug = slugify(instance.title,allow_unicode=True)
             slug = base_slug
-            counter = 1
-            # پیدا کردن slug آزاد در این parent
-            while Category.objects.filter(slug=slug, parent=instance.parent).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
-            print(slug)
-            instance.slug = slug
             instance.slug = slug
 
     else:
         print("new slug")
         base_slug = slugify(instance.title,allow_unicode=True)
         slug = base_slug
-        counter = 1
-        # پیدا کردن slug آزاد در این parent
-        while Category.objects.filter(slug=slug, parent=instance.parent).exists():
-            slug = f"{base_slug}-{counter}"
-            counter += 1
-
         instance.slug = slug
 
 @receiver(pre_save, sender=Author)

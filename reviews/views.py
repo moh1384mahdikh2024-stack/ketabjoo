@@ -25,9 +25,6 @@ class AcceptCommentsView(StaffRequiredMixin,View):
         comment = get_object_or_404(Comment, pk=review_id)
         comment.status=Comment.Status.accepted
         comment.save()
-        book = get_object_or_404(Book, pk=comment.book.pk)
-        book.rate = mean([int(c.score) for c in book.comments.all()])
-        book.save()
         messages.success(request,"کامنت پذیرفته شد")
         return redirect("status_comment_admin")
 class RejectCommentsView(StaffRequiredMixin,View):

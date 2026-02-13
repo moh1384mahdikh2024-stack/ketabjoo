@@ -1,0 +1,26 @@
+{% extends 'accounts/admin_dashboard.html' %}
+{% block title %}
+    کتاب های خریداری شده
+{% endblock %}
+{% block dashboard_content %}
+    <div class="container bg-white">
+        <div class="grid-container">
+            {% for book in books %}
+                <div class="card bg-dark" style="width: 18rem;">
+                    <img src="{{ book.thumbnail.url }}" class="card-img-top img-card"
+                         alt="{{ book.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title text-white">{{ book.title }}</h5>
+                        <p class="card-text text-white f-2"
+                           style="line-height: 1.8rem">{{ book.summary }}</p>
+                        <a href="{% url 'book_detail' book.slug %}" class="btn btn-primary zard">مشاهده
+                            بیشتر</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

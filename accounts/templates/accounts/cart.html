@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    سبد خرید
+{% endblock %}
+{% block main %}
+    <div class="container d-flex justify-content-between gap-4">
+        <div class="container w-75 products d-flex flex-column {% if not books %}justify-content-center{% endif %} align-items-center p-3">
+            {% if books %}
+                {% for book in books %}
+                    <div class="container d-flex w-100 justify-content-between align-items-center border-bottom py-3"
+                         style="border-bottom-color: #E7E7E7;">
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}"
+                                 style="width: 60px; height: 50px;border-radius: 8px;">
+                            <div class="container d-flex flex-column justify-content-center gap-">
+                                <p class="m-0">{{ book.title }}</p>
+                                <a href="{% url 'delete_cart' book.slug %}"
+                                   class="m-0 f-2 text-danger text text-decoration-none">حذف</a>
+                            </div>
+                        </div>
+                        <div class="">
+                            <span>{{ book.price }} تومان</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text text-danger f-3">هیچ کتابی در سبد خرید شما نیست</div>
+            {% endif %}
+
+
+        </div>
+        <div class="container w-25 sidebar bg-dark p-3">
+            <div class="f-4 text-white px-2">خلاصه سفارش</div>
+            <div class="px-2 mt-3">
+                <div class="d-flex justify-content-between">
+                    <div class="f-2 text-white">قیمت کتاب ها</div>
+                    <div class="f-2 text-white">{{ price }} تومان</div>
+                </div>
+                <hr class="text-white">
+                <div class="d-flex justify-content-between">
+                    <div class="f-2 text-white">ارزش افزوده(10 درصد)</div>
+                    <div class="f-2 text-white">{{ addon_price }} تومان</div>
+                </div>
+                <hr class="text-white">
+                <div class="d-flex justify-content-between">
+                    <div class="f-2 text-white">مجموع</div>
+                    <div class="f-2 text-white">{{ total_price }} تومان</div>
+                </div>
+                <hr class="text-white">
+                <div class="">
+                    <div class="f-2 text-white">قابل پرداخت</div>
+                    <div class=" text-white fs-1">{{ total_price }} تومان</div>
+                    <form action="{% url 'add_invoice' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="books" value="{{json_ids}}">
+                        <input type="hidden" name="price" value="{{ total_price }}">
+
+                        <button type="submit"
+                           class="btn btn-primary w-100 zard text text-decoration-none text-white fs-4 p-3 text-center mt-2 rounded fw-bold">پرداخت</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

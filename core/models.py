@@ -24,7 +24,6 @@ class Book(models.Model):
     pdf_file = models.FileField(upload_to="pdf", verbose_name="فایل pdf")
     category = models.ManyToManyField(to="Category", related_name="books",
                                  verbose_name="دسته بندی")
-    rate = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)], verbose_name="امتیاز", default=0)
     slug = models.SlugField(max_length=600, unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True,verbose_name="زمان اضافه شدن محصول",editable=False)
     is_deleted = models.BooleanField("حذف شده", default=False)
@@ -43,21 +42,13 @@ class Category(models.Model):
     description = models.TextField("توضیحات دسته")
     thumbnail = models.ImageField("عکس دسته", upload_to="cat_thumbnails", default="cat_thumbnails/default.jpg",
                                   blank=True)
-    parent = models.ForeignKey(to="self", verbose_name="دسته مادر", on_delete=models.CASCADE,
-                               related_name="children", blank=True, null=True)
+
     slug = models.SlugField(max_length=300)
 
     def __str__(self):
         return self.title
 
-    def get_full_path(self):
-        slugs = []
-        cat = self
-        while cat is not None:
-            slugs.append(cat.slug)
-            cat = cat.parent
-        slugs.reverse()
-        return "/".join(slugs)
+
 
     class Meta:
         verbose_name = "دسته بندی"

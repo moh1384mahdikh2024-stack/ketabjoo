@@ -6,6 +6,8 @@ from .forms import CategoryForm, BookForm, AuthorForm
 from .models import Category, Book, Author
 from reviews.models import Comment
 from favorite.models import Favorite
+from invoices.models import InvoiceItem
+from django.db.models import Q
 
 
 class StaffRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -35,13 +37,8 @@ class CreateCategory(StaffRequiredMixin, View):
 
 class UpdateCategory(StaffRequiredMixin, View):
     def post(self, request, cat_slug):
-        parts = cat_slug.strip("/").split("/")
-        category = None
-        parent = None
-        for slug in parts:
-            cat = get_object_or_404(Category, slug=slug, parent=parent)
-            # category = Category.objects.get(slug=slug, parent=parent)
-            parent = category  # برای مرحله بعد
+        slug = cat_slug
+        category = get_object_or_404(Category, slug=slug)
         form = CategoryForm(request.POST, request.FILES, instance=category)
         if form.is_valid():
             form.save()
@@ -112,7 +109,32 @@ class DeleteBook(StaffRequiredMixin, View):
 
 class BookDetailView(View):
     def get(self, request, book_slug):
-        book = get_object_or_404(Book, slug=book_slug)
-        comments = Comment.objects.filter(book=book, reply=None, status="a")
-        is_favor = Favorite.objects.filter(user=request.user, book=book).exists()
-        return render(request, "core/book_detail.html", {"book": book, "comments": comments, "is_favor": is_favor})
+        book = get_object_or_404(Book, slug=book_slug, is_deleted=False)
+        comments = Comment.objects.filter(book=book, status="a")
+        is_favor = False
+        is_bought = False
+        if request.user.is_authenticated:
+            is_favor = Favorite.objects.filter(user=request.user, book=book).exists()
+            is_bought = InvoiceItem.objects.filter(book=book,invoice__user=request.user).exists()
+        rate = 0
+        if comments:
+            for c in comments:
+                rate += c.score
+            rate /= comments.count()
+        return render(request, "core/book_detail.html",
+                      {"book": book, "rate": rate, "comments": comments, "is_favor": is_favor,"is_bought":is_bought})
+
+
+class ShopView(View):
+    def get(self, request):
+        query = request.GET.get("q")
+        if query:
+            query = query.strip()
+            books = Book.objects.filter((Q(title__icontains=query) | Q(author__name__icontains=query) | Q(
+                translator__icontains=query) | Q(publisher__icontains=query) | Q(category__title__icontains=query)),
+                                        is_deleted=False)
+        else:
+            books = Book.objects.filter(is_deleted=False)
+            for book in books:
+                book.summary = book.summary[:60] + "..."
+        return render(request, "core/shop.html", context={"books": books, "query": query})

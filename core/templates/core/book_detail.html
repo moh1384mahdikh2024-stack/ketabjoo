@@ -18,6 +18,7 @@
                     {% if book.translator %}
                         <div class="text-dark f-3">مترجم: <span class="text-banafsh">{{ book.translator }}</span></div>
                     {% endif %}
+                    <div class="text-dark f-3">امتیاز: <span class="text-banafsh">{{ rate }}</span></div>
                     <div class="text-dark f-2">
                         {{ book.summary }}...
                     </div>
@@ -31,29 +32,39 @@
                     </div>
                     {% if user.is_staff %}
                         <div class="col-lg-12">
-                            <a href="{% url 'update_book_admin' book.slug%}" class="btn btn-primary zard d-flex justify-content-center">
+                            <a href="{% url 'update_book_admin' book.slug %}"
+                               class="btn btn-primary zard d-flex justify-content-center">
                                 ویرایش
                             </a>
                         </div>
                         <div class="">
-                            <a href="{% url 'delete_book' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
+                            <a href="{% url 'delete_book' book.slug %}"
+                               class="btn btn-primary banafsh d-flex justify-content-center">
                                 حذف
                             </a>
                         </div>
                     {% else %}
                         <div class="col-lg-12">
-                            <a href="#" class="btn btn-primary zard d-flex justify-content-center">افزودن به سبد
-                                خرید</a>
+                            {% if is_bought %}
+                                <a href="{{ book.pdf_file.url }}"
+                                   class="btn btn-primary zard d-flex justify-content-center">دانلود</a>
+                            {% else %}
+                                <a href="{% url 'add_cart' book.slug %}"
+                                   class="btn btn-primary zard d-flex justify-content-center">افزودن به سبد
+                                    خرید</a>
+                            {% endif %}
                         </div>
                         <div class="">
                             {% if is_favor %}
-                            	<a href="{% url 'remove_favorite' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
-                                خارج کردن از علاقه مندی ها
+                                <a href="{% url 'remove_favorite' book.slug %}"
+                                   class="btn btn-primary banafsh d-flex justify-content-center">
+                                    خارج کردن از علاقه مندی ها
                                 </a>
                             {% else %}
-                            	
-                            <a href="{% url 'add_favorite' book.slug%}" class="btn btn-primary banafsh d-flex justify-content-center">
-                                افزودن به علاقه مندی ها
+
+                                <a href="{% url 'add_favorite' book.slug %}"
+                                   class="btn btn-primary banafsh d-flex justify-content-center">
+                                    افزودن به علاقه مندی ها
                                 </a>
                             {% endif %}
                         </div>

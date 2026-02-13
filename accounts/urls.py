@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import LoginView, LogoutView, DashboardView, RegisterView, NewCategoryView, UpdateCategoryView, \
-    NewAuthorView, UpdateAuthorView, NewBookView, UpdateBookView, CommentView
+    NewAuthorView, UpdateAuthorView, NewBookView, UpdateBookView, CommentView,CartView,AddCartView,DeleteCartView,BoughtBookView
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
@@ -14,4 +14,8 @@ urlpatterns = [
     path("book/", NewBookView.as_view(), name="book_admin"),
     path("book/<book_slug>", UpdateBookView.as_view(), name="update_book_admin"),
     path("review/new/", CommentView.as_view(), name="status_comment_admin"),
+    path("cart/", CartView.as_view(), name="cart"),
+    path("cart/add/<book_slug>", AddCartView.as_view(), name="add_cart"),
+    path("cart/delete/<book_slug>", DeleteCartView.as_view(), name="delete_cart"),
+    path("mybook/",BoughtBookView.as_view(), name="mybook"),
 ]

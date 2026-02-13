@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     کتابجو
+{% endblock %}
+{% block hero %}
+    <section class="hero-section" style="background-image: url({% static 'stack-books-with-library-scene.jpg' %} );">
+        <div class="container w-100 h-100 d-flex flex-column justify-content-center align-items-center z-2 position-relative">
+            <div class="container d-flex flex-column justify-content-center align-items-center align-content-center gap-4 w-75">
+                <h2 class="text text-white text-center f-5">
+                    لذت خرید آنلاین کتاب، به سادگیِ ورق زدن یک صفحه
+                </h2>
+                <p class="text text-center text-white f-3">
+                    زمان آن رسیده که هوشمندانه‌تر مطالعه کنید. کتابجو پلی است میان شما و دنیای بی‌پایان دانش و داستان،
+                    بدون محدودیت‌های فیزیکی. با دسترسی به آرشیو بزرگ ما، نسخه‌های قانونی کتاب‌های مورد علاقه‌تان را با
+                    قیمتی به‌صرفه‌تر دریافت کنید و کتابخانه
+                    شخصی‌تان را دقیقاً همان‌طور که دوست دارید، مدیریت کنید.
+                </p>
+                <form action="{% url 'shop' %}" method="get">
+                    <div class="search-box">
+                        <input type="text" name="q" placeholder="نام کتاب، ناشر،مترجم، دسته بندی..."/>
+                        <button type="submit">جستجو</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
 {% endblock %}
 {% block main %}
     <div class="row row-cols-4 g-5">

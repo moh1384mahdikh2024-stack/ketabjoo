@@ -19,7 +19,6 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from favorite.models import Favorite
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +27,7 @@ urlpatterns = [
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("review/",include("reviews.urls")),
     path("favorites/",include("favorite.urls")),
+    path("invoice/",include("invoices.urls")),
 
 ]
 

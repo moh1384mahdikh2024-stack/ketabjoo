@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}
+    فروشگاه
+{% endblock %}
+
+{% block main %}
+    <div class="container d-flex justify-content-between gap-3">
+        <div class="container w-25 sidebar">
+            {% block sidebar %}
+
+            {% endblock %}
+        </div>
+        <div class="container w-74 main">
+            <div class="container d-flex align-items-center px-3 py-2 m-0 mb-3 breadcrumb">
+                <h6 class="f-3 m-0">{% block breadcrumb %}
+                    فروشگاه
+                {% endblock %}</h6>
+            </div>
+            <div class="container products m-0 p-3">
+                {% block card-grid %}
+                    <div class="grid-container">
+                        {% for book in books %}
+                            <div class="card bg-dark" style="width: 18rem;">
+                                <img src="{{ book.thumbnail.url }}" class="card-img-top img-card"
+                                     alt="{{ book.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title text-white">{{ book.title }}</h5>
+                                    <p class="card-text text-white f-2"
+                                       style="line-height: 1.8rem">{{ book.summary }}</p>
+                                    <a href="{% url 'book_detail' book.slug %}" class="btn btn-primary zard">مشاهده
+                                        بیشتر</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

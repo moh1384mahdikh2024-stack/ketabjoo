@@ -1,7 +1,7 @@
 {% load static %}
 
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 header">
+<header class="bg-dark">
+    <nav class="navbar container navbar-expand-lg navbar-dark bg-dark px-3 header">
 
         <!-- 🔥 همبرگری فقط برای موبایل -->
         <button class="navbar-toggler d-lg-none canvas-btn" type="button" data-bs-toggle="offcanvas"
@@ -11,7 +11,7 @@
         </button>
         <!-- LOGO -->
         <div class="">
-            <a class="navbar-brand nav-hover d-block" href="{% url 'home' %}">
+            <a class="navbar-brand nav-hover d-block m-0" href="{% url 'home' %}">
                 <img src="{% static 'logo/logo.png' %}" width="80" alt="">
             </a>
         </div>
@@ -22,21 +22,23 @@
 
             <ul class="navbar-nav gap-4">
                 <li><a class="nav-link text-white nav-hover" href="{% url 'home' %}">خانه</a></li>
-                <li><a class="nav-link text-white nav-hover" href="#">کتاب ها</a></li>
+                <li><a class="nav-link text-white nav-hover" href="{% url 'shop' %}">کتاب ها</a></li>
                 <li><a class="nav-link text-white nav-hover" href="#">مقالات</a></li>
                 <li><a class="nav-link text-white nav-hover" href="#">درباره ما</a></li>
                 <li><a class="nav-link text-white nav-hover" href="#">تماس با ما</a></li>
             </ul>
-            <div class="d-flex gap-3">
-                <div class="position-relative" style="max-width: 300px;">
-                    <input type="text" class="form-control ps-5 banafsh-bg text-white" placeholder="جستجو...">
-                    <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-3 text-white"></i>
-                </div>
+            <div class="d-flex justify-content-end gap-5" style="width: 25%">
+
                 {% if user.is_authenticated %}
+                    <a class="d-block text-zard text text-decoration-none f-3" href="{% url 'cart' %}">
+                    سبد خرید
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    </a>
                     <div class="dropdown">
-                        <div class="clickable w-20" data-bs-toggle="dropdown"
+                        <div class="clickable d-flex gap-4 align-items-center justify-content-between" data-bs-toggle="dropdown"
                              aria-expanded="false">
-                            <img class="circle-border img-fluid" src="{{ user.profile_picture.url }}"
+                            <p class="text-white m-0 f-2"><i class="fa-solid fa-caret-down mx-2"></i>{{ user.first_name }}</p>
+                            <img class="circle-border img-fluid w-20" src="{{ user.profile_picture.url }}"
                                  alt="تصویر پروفایل">
 
                         </div>
@@ -46,11 +48,12 @@
                             <li><a class="dropdown-item text-white nav-hover dropdown-hover-dark" href="{% url 'logout' %}">خروج</a></li>
                         </ul>
                     </div>
-                    <a class="d-block" href="#">
-
-                    </a>
                 {% else %}
-                    <a class="btn btn-primary text-white zard w-25 " href="{% url 'login' %}">ورود</a>
+                    <a class="d-block text-zard text text-decoration-none f-3" href="{% url 'cart' %}">
+                    سبد خرید
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    </a>
+                    <a class="btn btn-primary text-white zard" style="width: 100px" href="{% url 'login' %}">ورود</a>
                 {% endif %}
             </div>
         </div>
